@@ -6,7 +6,7 @@ cmake-build-debug/*
 .idea
 .idea/*
 ft_ssl
-
+.*
 #*
 *.a
 *.so
