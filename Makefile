@@ -16,7 +16,11 @@ CC = gcc
 
 LIBFT = printflibft/libftprintf.a
 
-SRC = src/main.c
+SRC =	source/main.c\
+		source/file.c\
+		source/parse.c\
+		source/input.c\
+		source/helper.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -30,7 +34,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) -o $(NAME) $(OBJ) $(LIBFT)
 
 $(OBJ): %.o: %.c
-	$(CC) -c $(FLAGS) $< -o $@
+	$(CC) -c  $< -o $@
 
 $(LIBFT):
 	make -C printflibft/
