@@ -16,15 +16,19 @@ CC = gcc
 
 LIBFT = printflibft/libftprintf.a
 
-SRC =	source/main.c\
+SRC =	source/md5.c\
+        source/main.c\
 		source/file.c\
 		source/parse.c\
 		source/input.c\
 		source/helper.c\
+		source/cipher.c\
 
 OBJ = $(SRC:.c=.o)
 
-HEADERS = lem_in.h printflibft/get_next_line.h printflibft/ft_printf.h
+HEADERS =	headers/ft_ssl.h\
+			headers/const.h\
+			printflibft/get_next_line.h printflibft/ft_printf.h
 
 FLAGS = -Wall -Wextra -Werror
 

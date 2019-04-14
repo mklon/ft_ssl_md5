@@ -20,15 +20,15 @@ void	parse_flags(int argc, char **argv, t_data data)
 	while (++i < argc)
 	{
 		if (!ft_strcmp(argv[i], "-q"))
-			data._q = TRUE;
+			data.q = TRUE;
 		else if (!ft_strcmp(argv[i], "-r"))
-			data._r = TRUE;
+			data.r = TRUE;
 		else if (!ft_strcmp(argv[i], "-p"))
 			handle_p(data);
 		else if (!ft_strcmp(argv[i], "-s"))
 		{
 			if (++i < argc)
-				handle_s(argv[i]);
+				handle_s(argv[i], data);
 		}
 		else
 		{
@@ -59,12 +59,33 @@ t_cipher	check_cipher(char *cipher)
 
 void	parse_input(int argc, char **argv)
 {
-	int		i;
 	t_data	data;
 
-	i = 2;
-	data._q = FALSE;
-	data._r = FALSE;
+	data.q = FALSE;
+	data.r = FALSE;
 	data.cipher = check_cipher(argv[1]);
 	parse_flags(argc, argv, data);
+}
+
+char	*create_str(uint32_t *quad)
+{
+	int		i;
+	char	*str;
+	char	*hex;
+	char	*res;
+
+	res = NULL;
+	str = (char *)malloc(sizeof(char) * 64);
+	ft_bzero(str, 64);
+	i = -1;
+	while (++i < 4)
+	{
+		hex = to_16(quad[i], 0);
+		hex[8] = '\0';
+		res = ft_strjoin(str, hex);
+		free(hex);
+		free(str);
+		str = res;
+	}
+	return (res);
 }

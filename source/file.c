@@ -43,9 +43,7 @@ void	handle_file(int argc, char **argv, int i, t_data data)
 			error_file(argv[i], data);
 			continue ;
 		}
-		ft_printf("%s", str);
-
-		//CIPHER
+ 		hash(str, data.cipher);
 
 		//DISPLAY
 		free(str);

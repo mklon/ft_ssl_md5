@@ -51,21 +51,24 @@ char	*read_str(int fd)
 void	handle_p(t_data data)
 {
 	char	*str;
+	char	*res;
 
 	str = read_str(0);
-	ft_printf("\n%s\n", str);
-
-	//CIPHER
+	res = hash(str, data.cipher);
 
 	//DISPLAY
+	ft_printf("%s\n", res);
 	free(str);
+	free(res);
 }
 
-void	handle_s(char *str)
+void	handle_s(char *str, t_data data)
 {
-	ft_printf("%s\n", str);
+	char	*res;
 
-	//CIPHER
+	res = hash(str, data.cipher);
 
+	ft_printf("%s\n", res);
 	//DISPLAY
+	free(res);
 }
