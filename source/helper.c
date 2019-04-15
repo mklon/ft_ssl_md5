@@ -36,9 +36,8 @@ uint32_t	reverse(uint32_t i)
 	return ((res << 16) | (res >> 16));
 }
 
-char	*to_16(uint32_t addr, int j)
+char	*to_16(uint32_t addr, int i, int j)
 {
-	int		i;
 	int		hex;
 	char	buff[16];
 	char	*res;
@@ -55,10 +54,13 @@ char	*to_16(uint32_t addr, int j)
 			buff[i++] = (char)(hex + '0');
 		addr /= 16;
 	}
+	while (i < 8)
+	{
+		buff[i] = '0';
+		buff[i++ + 1] = '\0';
+	}
 	i--;
 	while (i >= 0)
-	{
 		res[j++] = buff[i--];
-	}
 	return (res);
 }

@@ -80,7 +80,7 @@ char	*create_str(uint32_t *quad)
 	i = -1;
 	while (++i < 4)
 	{
-		hex = to_16(quad[i], 0);
+		hex = to_16(quad[i], 0, 0);
 		hex[8] = '\0';
 		res = ft_strjoin(str, hex);
 		free(hex);

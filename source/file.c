@@ -34,6 +34,7 @@ char	*read_file(char *name)
 void	handle_file(int argc, char **argv, int i, t_data data)
 {
 	char	*str;
+	char	*res;
 
 	while (++i < argc)
 	{
@@ -43,9 +44,12 @@ void	handle_file(int argc, char **argv, int i, t_data data)
 			error_file(argv[i], data);
 			continue ;
 		}
- 		hash(str, data.cipher);
+ 		res = hash(str, data.cipher);
 
+		ft_printf("%s\n", res);
 		//DISPLAY
 		free(str);
+		free(res);
 	}
 }
+

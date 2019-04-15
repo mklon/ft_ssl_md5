@@ -12,45 +12,6 @@
 
 #include "../headers/ft_ssl.h"
 
-void	algorithm(int i, uint32_t *x, uint32_t *quad)
-{
-	uint32_t	res;
-	uint32_t	temp;
-
-	uint32_t g0 = quad[0];
-	uint32_t g1 = quad[1];
-	uint32_t g2 = quad[2];
-	uint32_t g3 = quad[3];
-
-	if (i < 16)
-		res = F(quad[1], quad[2], quad[3]);
-	else if (i < 32)
-		res = G(quad[1], quad[2], quad[3]);
-	else if (i < 48)
-		res = H(quad[1], quad[2], quad[3]);
-	else
-		res = I(quad[1], quad[2], quad[3]);
-	temp = quad[3];
-	quad[3] = quad[2];
-	quad[2] = quad[1];
-	quad[1] += R((quad[0] + res + x[g_c[i]] + g_a[i]), g_b[i]);
-	quad[0] = temp;
-}
-
-void	round_md5(uint32_t *x, uint32_t *res)
-{
-	int			i;
-
-	i = -1;
-	while (++i < 64)
-	{
-		algorithm(i, x, res);
-	}
-	i = -1;
-	while (++i < 4)
-		res[i] += g_d[i];
-}
-
 uint32_t	*split(uchar_t *base)
 {
 	int			i;
@@ -89,6 +50,44 @@ t_info	padding_md5(char *str)
 	return (info);
 }
 
+void	algorithm(int i, uint32_t *x, uint32_t *quad)
+{
+	uint32_t	res;
+	uint32_t	temp;
+
+	if (i < 16)
+		res = F(quad[1], quad[2], quad[3]);
+	else if (i < 32)
+		res = G(quad[1], quad[2], quad[3]);
+	else if (i < 48)
+		res = H(quad[1], quad[2], quad[3]);
+	else
+		res = I(quad[1], quad[2], quad[3]);
+	temp = quad[3];
+	quad[3] = quad[2];
+	quad[2] = quad[1];
+	quad[1] += R((quad[0] + res + x[g_c[i]] + g_a_md5[i]), g_b[i]);
+	quad[0] = temp;
+}
+
+void	round_md5(uint32_t *x, uint32_t *res)
+{
+	int			i;
+	uint32_t	dop[4];
+
+	i = -1;
+	while (++i < 4)
+		dop[i] = res[i];
+	i = -1;
+	while (++i < 64)
+	{
+		algorithm(i, x, res);
+	}
+	i = -1;
+	while (++i < 4)
+		res[i] += dop[i];
+}
+
 char	*md5(char *str)
 {
 	int			i;
@@ -102,12 +101,14 @@ char	*md5(char *str)
 	while (++i < 4)
 		res[i] = g_d[i];
 	i = 0;
+
 	while (i < info.size)
 	{
 		x = split(&info.base[i]);
-		round_md5(x, &res[0]);
 
+		round_md5(x, &res[0]);
 		free(x);
+
 		i += BASE_SIZE;
 	}
 	i = -1;

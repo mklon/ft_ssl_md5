@@ -99,6 +99,6 @@ void			handle_file(int argc, char **argv, int i, t_data data);
 void			error(char *msg);
 char			*get_cipher(t_cipher cipher);
 uint32_t		reverse(uint32_t i);
-char			*to_16(uint32_t addr, int j);
+char			*to_16(uint32_t addr, int i, int j);
 
 #endif
