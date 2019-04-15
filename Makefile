@@ -26,9 +26,10 @@ SRC =	source/md5.c\
 
 OBJ = $(SRC:.c=.o)
 
-HEADERS =	headers/ft_ssl.h\
-			headers/const.h\
-			printflibft/get_next_line.h printflibft/ft_printf.h
+HEADERS =	headers/const.h\
+			headers/ft_ssl.h\
+			printflibft/ft_printf.h\
+			printflibft/get_next_line.h\
 
 FLAGS = -Wall -Wextra -Werror
 
