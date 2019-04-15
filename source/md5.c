@@ -12,7 +12,7 @@
 
 #include "../headers/ft_ssl.h"
 
-uint32_t	*split(uchar_t *base)
+uint32_t	*split(uchar_t *base, t_bool rev)
 {
 	int			i;
 	int			size;
@@ -24,12 +24,14 @@ uint32_t	*split(uchar_t *base)
 	while (++i < 16)
 	{
 		ft_memcpy(&x[i], base + size, ADDR_SIZE / 2);
+		if (rev == TRUE)
+			x[i] = reverse(x[i]);
 		size += ADDR_SIZE / 2;
 	}
 	return (x);
 }
 
-t_info	padding_md5(char *str)
+t_info	padding(char *str, t_bool res)
 {
 	int			i;
 	t_info		info;
@@ -44,7 +46,10 @@ t_info	padding_md5(char *str)
 	ft_bzero(info.base, info.size);
 	while (++i < size)
 		info.base[i] = (uchar_t)str[i];
-	size *= ADDR_SIZE;
+	if (res == TRUE)
+		size = reverse_64(size * 8);
+	else
+		size *= ADDR_SIZE;
 	info.base[i] = 0x80;
 	ft_memcpy(&info.base[info.size - ADDR_SIZE], &size, ADDR_SIZE);
 	return (info);
@@ -95,20 +100,16 @@ char	*md5(char *str)
 	uint32_t	*x;
 	uint32_t	res[4];
 
-	info = padding_md5(str);
-
 	i = -1;
+	info = padding(str, FALSE);
 	while (++i < 4)
 		res[i] = g_d[i];
 	i = 0;
-
 	while (i < info.size)
 	{
-		x = split(&info.base[i]);
-
+		x = split(&info.base[i], FALSE);
 		round_md5(x, &res[0]);
 		free(x);
-
 		i += BASE_SIZE;
 	}
 	i = -1;

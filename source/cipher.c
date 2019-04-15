@@ -15,11 +15,9 @@
 char	*hash(char *str, t_cipher cipher)
 {
 	if (cipher == MD5)
-		return md5(str);
+		return (md5(str));
 	else if(cipher == SHA256)
-	{
-		/*SHA256*/
-	}
+		return (sha256(str));
 	else
 		error("unknown cipher\n");
 	return (NULL);

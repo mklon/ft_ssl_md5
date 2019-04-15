@@ -23,7 +23,16 @@
 # define G(x, y, z) ((x & z) | (y & (~z)))
 # define H(x, y, z) (x ^ y ^ z)
 # define I(x, y, z) (y ^ (x | (~z)))
-# define R(v, s) (((v << s) | (v >> (32 - s))))
+# define R(x, y) (((x << y) | (x >> (32 - y))))
+
+# define R64(x, y)	(((x >> y) | (x << (32 - y))))
+# define MA(x, y, z) ((x & y) ^ (x & z) ^ (y & z))
+# define S0(x)	(R64(x, 7) ^ R64(x, 18) ^ (x >> 3))
+# define S1(x)	(R64(x, 17) ^ R64(x, 19) ^ (x >> 10))
+# define E0(x)	(R64(x, 2) ^ R64(x, 13) ^ R64(x, 22))
+# define E1(x)	(R64(x, 6) ^ R64(x, 11) ^ R64(x, 25))
+# define CH(x, y, z) ((x & y) ^ ((~x) & z))
+
 
 typedef enum	e_bool {
 	FALSE,
@@ -73,9 +82,18 @@ char			*hash(char *str, t_cipher cipher);
 **	md5.c
 */
 
-t_info			padding_md5(char *str);
-uint32_t		*split(uchar_t *base);
+t_info			padding(char *str, t_bool res);
+uint32_t		*split(uchar_t *base, t_bool rev);
+void			algorithm(int i, uint32_t *x, uint32_t *quad);
+void			round_md5(uint32_t *x, uint32_t *res);
 char			*md5(char *str);
+
+/*
+**	sha256.c
+*/
+
+void			round_sha256(uint32_t *x, uint32_t *res);
+char			*sha256(char *str);
 
 /*
 **	input.c
@@ -90,6 +108,8 @@ void			handle_s(char *str, t_data data);
 **	file.c
 */
 
+char			*read_file(char *name);
+void			error_file(char *name, t_data data);
 void			handle_file(int argc, char **argv, int i, t_data data);
 
 /*
@@ -99,6 +119,7 @@ void			handle_file(int argc, char **argv, int i, t_data data);
 void			error(char *msg);
 char			*get_cipher(t_cipher cipher);
 uint32_t		reverse(uint32_t i);
+uint64_t		reverse_64(uint64_t i);
 char			*to_16(uint32_t addr, int i, int j);
 
 #endif

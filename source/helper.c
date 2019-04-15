@@ -12,13 +12,13 @@
 
 #include "../headers/ft_ssl.h"
 
-void	error(char *msg)
+void		error(char *msg)
 {
 	ft_printf("%s\n", msg);
 	exit(1);
 }
 
-char	*get_cipher(t_cipher cipher)
+char		*get_cipher(t_cipher cipher)
 {
 	if (cipher == MD5)
 		return ("md5");
@@ -36,7 +36,18 @@ uint32_t	reverse(uint32_t i)
 	return ((res << 16) | (res >> 16));
 }
 
-char	*to_16(uint32_t addr, int i, int j)
+uint64_t	reverse_64(uint64_t i)
+{
+	uint64_t	res;
+
+	res = ((i << 8) & 0xFF00FF00FF00FF00ULL)
+			| ((i >> 8) & 0x00FF00FF00FF00FFULL);
+	res = ((res << 16) & 0xFFFF0000FFFF0000ULL)
+			| ((res >> 16) & 0x0000FFFF0000FFFFULL);
+	return (res << 32) | (res >> 32);
+}
+
+char		*to_16(uint32_t addr, int i, int j)
 {
 	int		hex;
 	char	buff[16];

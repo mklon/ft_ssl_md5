@@ -23,6 +23,7 @@ SRC =	source/md5.c\
 		source/input.c\
 		source/helper.c\
 		source/cipher.c\
+		source/sha256.c\
 
 OBJ = $(SRC:.c=.o)
 

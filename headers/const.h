@@ -72,8 +72,13 @@ const static	uint32_t	g_c[] = {
 		3, 10, 1, 8, 15, 6, 13, 4, 11, 2, 9
 };
 
- static	uint32_t	g_d[] = {
+const static	uint32_t	g_d[] = {
 		0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476
+};
+
+const static	uint32_t	g_d_sha[] = {
+		0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+		0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
 };
 
 #endif
