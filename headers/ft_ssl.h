@@ -100,7 +100,7 @@ uint32_t		ch(uint32_t x, uint32_t y, uint32_t z);
 
 char			*cat_str(char *ptr1, char *ptr2, int size, size_t num);
 char			*read_str(int fd);
-void			handle_p(t_data data);
+void			handle_p(t_data data, t_bool is_flag);
 void			handle_s(char *str, t_data data);
 
 /*
@@ -126,7 +126,7 @@ char			*to_16(uint32_t addr, int i, int j);
 */
 
 char			*get_up_chipher(t_cipher cipher);
-void			print_p(char *str, char *init);
+void			print_p(char *str, char *init, t_bool is_flag);
 void			print_s(char *str, char *init, t_data data);
 void			print_f(char *str, char *name, t_data data);
 

@@ -24,7 +24,7 @@ void		parse_flags(int argc, char **argv, t_data data)
 		else if (!ft_strcmp(argv[i], "-r"))
 			data.r = TRUE;
 		else if (!ft_strcmp(argv[i], "-p"))
-			handle_p(data);
+			handle_p(data, TRUE);
 		else if (!ft_strcmp(argv[i], "-s"))
 		{
 			if (++i < argc)
@@ -63,7 +63,10 @@ void		parse_input(int argc, char **argv)
 	data.q = FALSE;
 	data.r = FALSE;
 	data.cipher = check_cipher(argv[1]);
-	parse_flags(argc, argv, data);
+	if (argc == 2)
+		handle_p(data, FALSE);
+	else
+		parse_flags(argc, argv, data);
 }
 
 char		*create_str(uint32_t *quad, int size)

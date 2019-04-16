@@ -48,7 +48,7 @@ char	*read_str(int fd)
 	return (ptr);
 }
 
-void	handle_p(t_data data)
+void	handle_p(t_data data, t_bool is_flag)
 {
 	char	*str;
 	char	*res;
@@ -57,12 +57,12 @@ void	handle_p(t_data data)
 	if (str == NULL)
 	{
 		res = hash("", data.cipher);
-		print_p(res, "");
+		print_p(res, str, is_flag);
 	}
 	else
 	{
 		res = hash(str, data.cipher);
-		print_p(res, str);
+		print_p(res, str, is_flag);
 		free(str);
 	}
 }

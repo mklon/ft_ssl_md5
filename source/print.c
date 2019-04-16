@@ -22,9 +22,12 @@ char	*get_up_chipher(t_cipher cipher)
 		return ("unknown cipher");
 }
 
-void	print_p(char *str, char *init)
+void	print_p(char *str, char *init, t_bool is_flag)
 {
-	ft_printf("%s%s\n", init, str);
+	if (is_flag == TRUE)
+		ft_printf("%s%s\n", init, str);
+	else
+		ft_printf("%s\n", str);
 }
 
 void	print_s(char *str, char *init, t_data data)
