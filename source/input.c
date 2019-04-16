@@ -54,9 +54,17 @@ void	handle_p(t_data data)
 	char	*res;
 
 	str = read_str(0);
-	res = hash(str, data.cipher);
-	print_p(res, str);
-	free(str);
+	if (str == NULL)
+	{
+		res = hash("", data.cipher);
+		print_p(res, "");
+	}
+	else
+	{
+		res = hash(str, data.cipher);
+		print_p(res, str);
+		free(str);
+	}
 }
 
 void	handle_s(char *str, t_data data)
