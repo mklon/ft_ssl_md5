@@ -12,9 +12,9 @@
 
 #include "../headers/ft_ssl.h"
 
-void	parse_flags(int argc, char **argv, t_data data)
+void		parse_flags(int argc, char **argv, t_data data)
 {
-	int 	i;
+	int		i;
 
 	i = 1;
 	while (++i < argc)
@@ -42,7 +42,6 @@ t_cipher	check_cipher(char *cipher)
 {
 	t_cipher	result;
 
-
 	result = 2;
 	if (!ft_strcmp(cipher, "md5") || !ft_strcmp(cipher, "MD5"))
 		result = MD5;
@@ -57,7 +56,7 @@ t_cipher	check_cipher(char *cipher)
 	return (result);
 }
 
-void	parse_input(int argc, char **argv)
+void		parse_input(int argc, char **argv)
 {
 	t_data	data;
 
@@ -67,7 +66,7 @@ void	parse_input(int argc, char **argv)
 	parse_flags(argc, argv, data);
 }
 
-char	*create_str(uint32_t *quad)
+char		*create_str(uint32_t *quad, int size)
 {
 	int		i;
 	char	*str;
@@ -78,7 +77,7 @@ char	*create_str(uint32_t *quad)
 	str = (char *)malloc(sizeof(char) * 64);
 	ft_bzero(str, 64);
 	i = -1;
-	while (++i < 4)
+	while (++i < size)
 	{
 		hex = to_16(quad[i], 0, 0);
 		hex[8] = '\0';

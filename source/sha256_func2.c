@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cipher.c                                           :+:      :+:    :+:   */
+/*   sha256_func2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oposhiva <oposhiva@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/14 11:53:10 by oposhiva          #+#    #+#             */
-/*   Updated: 2019/04/14 11:53:10 by oposhiva         ###   ########.fr       */
+/*   Created: 2019/04/16 20:50:38 by oposhiva          #+#    #+#             */
+/*   Updated: 2019/04/16 20:50:38 by oposhiva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/ft_ssl.h"
 
-char	*hash(char *str, t_cipher cipher)
+uint32_t	e0(uint32_t x)
 {
-	if (cipher == MD5)
-		return (md5(str));
-	else if (cipher == SHA256)
-		return (sha256(str));
-	else
-		error("unknown cipher\n");
-	return (NULL);
+	return (r64(x, 2) ^ r64(x, 13) ^ r64(x, 22));
+}
+
+uint32_t	e1(uint32_t x)
+{
+	return (r64(x, 6) ^ r64(x, 11) ^ r64(x, 25));
+}
+
+uint32_t	ma(uint32_t x, uint32_t y, uint32_t z)
+{
+	return ((x & y) ^ (x & z) ^ (y & z));
+}
+
+uint32_t	ch(uint32_t x, uint32_t y, uint32_t z)
+{
+	return ((x & y) ^ (~x & z));
 }

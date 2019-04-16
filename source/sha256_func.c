@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cipher.c                                           :+:      :+:    :+:   */
+/*   sha256_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oposhiva <oposhiva@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/14 11:53:10 by oposhiva          #+#    #+#             */
-/*   Updated: 2019/04/14 11:53:10 by oposhiva         ###   ########.fr       */
+/*   Created: 2019/04/16 20:11:42 by oposhiva          #+#    #+#             */
+/*   Updated: 2019/04/16 20:11:43 by oposhiva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/ft_ssl.h"
 
-char	*hash(char *str, t_cipher cipher)
+uint32_t	r64(uint32_t x, uint32_t y)
 {
-	if (cipher == MD5)
-		return (md5(str));
-	else if (cipher == SHA256)
-		return (sha256(str));
-	else
-		error("unknown cipher\n");
-	return (NULL);
+	return (((x >> y) | (x << (32 - y))));
+}
+
+uint32_t	s0(uint32_t x)
+{
+	return (r64(x, 7) ^ r64(x, 18) ^ (x >> 3));
+}
+
+uint32_t	s1(uint32_t x)
+{
+	return (r64(x, 17) ^ r64(x, 19) ^ (x >> 10));
 }

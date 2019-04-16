@@ -22,7 +22,7 @@ char	*cat_str(char *ptr1, char *ptr2, int size, size_t num)
 	if (ptr1 != NULL)
 	{
 		ft_strncpy(res, ptr1, (size_t)size);
-		res[size  - num] = '\0';
+		res[size - num] = '\0';
 	}
 	ft_strncat(res, ptr2, num);
 	if (ptr1 != NULL)
@@ -55,11 +55,8 @@ void	handle_p(t_data data)
 
 	str = read_str(0);
 	res = hash(str, data.cipher);
-
-	//DISPLAY
-	ft_printf("%s\n", res);
+	print_p(res, str);
 	free(str);
-	free(res);
 }
 
 void	handle_s(char *str, t_data data)
@@ -67,8 +64,6 @@ void	handle_s(char *str, t_data data)
 	char	*res;
 
 	res = hash(str, data.cipher);
-
-	ft_printf("%s\n", res);
-	//DISPLAY
+	print_s(res, str, data);
 	free(res);
 }

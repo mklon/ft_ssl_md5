@@ -25,9 +25,7 @@ char	*read_file(char *name)
 
 	if ((fd = open(name, O_RDONLY)) == -1)
 		return (NULL);
-
 	str = read_str(fd);
-
 	return (str);
 }
 
@@ -44,12 +42,8 @@ void	handle_file(int argc, char **argv, int i, t_data data)
 			error_file(argv[i], data);
 			continue ;
 		}
- 		res = hash(str, data.cipher);
-
-		ft_printf("%s\n", res);
-		//DISPLAY
+		res = hash(str, data.cipher);
+		print_f(res, argv[i], data);
 		free(str);
-		free(res);
 	}
 }
-

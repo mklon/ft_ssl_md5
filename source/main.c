@@ -12,7 +12,7 @@
 
 #include "../headers/ft_ssl.h"
 
-void	usage()
+void	usage(void)
 {
 	ft_printf("usage: ./ft_ssl [md5 | sha256] [-p | -q | -r ]"
 				"[-s string] [files...]\n");
@@ -23,11 +23,12 @@ void	usage()
 	exit(1);
 }
 
-int		main(int argc, char **argv) {
+int		main(int argc, char **argv)
+{
 	(void)argv;
 	(void)argc;
 	if (argc == 1)
 		usage();
 	parse_input(argc, argv);
-	return 0;
+	return (0);
 }

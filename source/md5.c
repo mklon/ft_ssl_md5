@@ -31,7 +31,7 @@ uint32_t	*split(uchar_t *base, t_bool rev)
 	return (x);
 }
 
-t_info	padding(char *str, t_bool res)
+t_info		padding(char *str, t_bool res)
 {
 	int			i;
 	t_info		info;
@@ -55,7 +55,7 @@ t_info	padding(char *str, t_bool res)
 	return (info);
 }
 
-void	algorithm(int i, uint32_t *x, uint32_t *quad)
+void		algorithm(int i, uint32_t *x, uint32_t *quad)
 {
 	uint32_t	res;
 	uint32_t	temp;
@@ -75,7 +75,7 @@ void	algorithm(int i, uint32_t *x, uint32_t *quad)
 	quad[0] = temp;
 }
 
-void	round_md5(uint32_t *x, uint32_t *res)
+void		round_md5(uint32_t *x, uint32_t *res)
 {
 	int			i;
 	uint32_t	dop[4];
@@ -93,7 +93,7 @@ void	round_md5(uint32_t *x, uint32_t *res)
 		res[i] += dop[i];
 }
 
-char	*md5(char *str)
+char		*md5(char *str)
 {
 	int			i;
 	t_info		info;
@@ -115,5 +115,5 @@ char	*md5(char *str)
 	i = -1;
 	while (++i < 4)
 		res[i] = reverse(res[i]);
-	return (create_str(&res[0]));
+	return (create_str(res, 4));
 }

@@ -15,25 +15,6 @@
 
 # include "const.h"
 
-# define BUFF 101
-# define ADDR_SIZE 8
-# define BASE_SIZE 64
-
-# define F(x, y, z) ((x & y) | ((~x) & z))
-# define G(x, y, z) ((x & z) | (y & (~z)))
-# define H(x, y, z) (x ^ y ^ z)
-# define I(x, y, z) (y ^ (x | (~z)))
-# define R(x, y) (((x << y) | (x >> (32 - y))))
-
-# define R64(x, y)	(((x >> y) | (x << (32 - y))))
-# define MA(x, y, z) ((x & y) ^ (x & z) ^ (y & z))
-# define S0(x)	(R64(x, 7) ^ R64(x, 18) ^ (x >> 3))
-# define S1(x)	(R64(x, 17) ^ R64(x, 19) ^ (x >> 10))
-# define E0(x)	(R64(x, 2) ^ R64(x, 13) ^ R64(x, 22))
-# define E1(x)	(R64(x, 6) ^ R64(x, 11) ^ R64(x, 25))
-# define CH(x, y, z) ((x & y) ^ ((~x) & z))
-
-
 typedef enum	e_bool {
 	FALSE,
 	TRUE
@@ -70,7 +51,7 @@ int				main(int argc, char **argv);
 void			parse_flags(int argc, char **argv, t_data data);
 t_cipher		check_cipher(char *cipher);
 void			parse_input(int argc, char **argv);
-char			*create_str(uint32_t *quad);
+char			*create_str(uint32_t *quad, int size);
 
 /*
 **	cipher.c
@@ -92,8 +73,26 @@ char			*md5(char *str);
 **	sha256.c
 */
 
+void			algorithm_sha_2(uint32_t *t, uint32_t *res);
+void			algorithm_sha_1(uint32_t *t, const uint32_t *x);
 void			round_sha256(uint32_t *x, uint32_t *res);
 char			*sha256(char *str);
+
+/*
+**	sha256_func.c
+*/
+uint32_t		r64(uint32_t x, uint32_t y);
+uint32_t		s0(uint32_t x);
+uint32_t		s1(uint32_t x);
+
+/*
+**	sha256_func2.c
+*/
+
+uint32_t		e0(uint32_t x);
+uint32_t		e1(uint32_t x);
+uint32_t		ma(uint32_t x, uint32_t y, uint32_t z);
+uint32_t		ch(uint32_t x, uint32_t y, uint32_t z);
 
 /*
 **	input.c
@@ -121,5 +120,14 @@ char			*get_cipher(t_cipher cipher);
 uint32_t		reverse(uint32_t i);
 uint64_t		reverse_64(uint64_t i);
 char			*to_16(uint32_t addr, int i, int j);
+
+/*
+**	print.c
+*/
+
+char			*get_up_chipher(t_cipher cipher);
+void			print_p(char *str, char *init);
+void			print_s(char *str, char *init, t_data data);
+void			print_f(char *str, char *name, t_data data);
 
 #endif
