@@ -23,7 +23,6 @@ SRC =	source/md5.c\
 		source/input.c\
 		source/print.c\
 		source/helper.c\
-		source/cipher.c\
 		source/sha256.c\
 		source/sha256_func.c\
 		source/sha256_func2.c\

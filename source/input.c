@@ -12,6 +12,15 @@
 
 #include "../headers/ft_ssl.h"
 
+void	cipher_error(char *str)
+{
+	ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n"
+			"Message Digest commands:\n"
+			"md5\n"
+			"sha256\n\n", str);
+	usage();
+}
+
 char	*cat_str(char *ptr1, char *ptr2, int size, size_t num)
 {
 	char	*res;
@@ -56,22 +65,23 @@ void	handle_p(t_data data, t_bool is_flag)
 	str = read_str(0);
 	if (str == NULL)
 	{
-		res = hash("", data.cipher);
+		res = data.f.func("");
 		print_p(res, str, is_flag);
 	}
 	else
 	{
-		res = hash(str, data.cipher);
+		res = data.f.func(str);
 		print_p(res, str, is_flag);
 		free(str);
 	}
+	free(res);
 }
 
 void	handle_s(char *str, t_data data)
 {
 	char	*res;
 
-	res = hash(str, data.cipher);
+	res = data.f.func(str);
 	print_s(res, str, data);
 	free(res);
 }

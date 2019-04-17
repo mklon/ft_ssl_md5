@@ -12,7 +12,7 @@
 
 #include "../headers/ft_ssl.h"
 
-void		parse_flags(int argc, char **argv, t_data data)
+void	parse_flags(int argc, char **argv, t_data data)
 {
 	int		i;
 
@@ -38,38 +38,45 @@ void		parse_flags(int argc, char **argv, t_data data)
 	}
 }
 
-t_cipher	check_cipher(char *cipher)
+t_bool	get_f(char *str, t_f *f)
 {
-	t_cipher	result;
+	int		i;
+	t_f		fu[2];
 
-	result = 2;
-	if (!ft_strcmp(cipher, "md5") || !ft_strcmp(cipher, "MD5"))
-		result = MD5;
-	else if (!ft_strcmp(cipher, "sha256") || !ft_strcmp(cipher, "SHA256"))
-		result = SHA256;
-	else
+	i = -1;
+	fu[0].name = "md5";
+	fu[0].func = &md5;
+	fu[1].name = "sha256";
+	fu[1].func = &sha256;
+	while (++i < N)
 	{
-		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", cipher);
-		usage();
-		error("");
+		if (!ft_strcmp(str, fu[i].name))
+		{
+			f->func = fu[i].func;
+			f->name = fu[i].name;
+			return (TRUE);
+		}
 	}
-	return (result);
+	return (FALSE);
 }
 
-void		parse_input(int argc, char **argv)
+void	parse_input(int argc, char **argv)
 {
 	t_data	data;
+	t_f		f;
 
 	data.q = FALSE;
 	data.r = FALSE;
-	data.cipher = check_cipher(argv[1]);
+	if ((get_f(argv[1], &f)) == FALSE)
+		cipher_error(argv[1]);
+	data.f = f;
 	if (argc == 2)
 		handle_p(data, FALSE);
 	else
 		parse_flags(argc, argv, data);
 }
 
-char		*create_str(uint32_t *quad, int size)
+char	*create_str(uint32_t *quad, int size)
 {
 	int		i;
 	char	*str;

@@ -12,11 +12,11 @@
 
 #include "../headers/ft_ssl.h"
 
-char	*get_up_chipher(t_cipher cipher)
+char	*get_up_chipher(char *str)
 {
-	if (cipher == MD5)
+	if (!ft_strcmp("md5", str))
 		return ("MD5");
-	else if (cipher == SHA256)
+	else if (!ft_strcmp("sha256", str))
 		return ("SHA256");
 	else
 		return ("unknown cipher");
@@ -34,7 +34,7 @@ void	print_s(char *str, char *init, t_data data)
 {
 	char	*cipher;
 
-	cipher = get_up_chipher(data.cipher);
+	cipher = get_up_chipher(data.f.name);
 	if (data.q == TRUE)
 	{
 		ft_printf("%s\n", str);
@@ -52,7 +52,7 @@ void	print_f(char *str, char *name, t_data data)
 {
 	char	*cipher;
 
-	cipher = get_up_chipher(data.cipher);
+	cipher = get_up_chipher(data.f.name);
 	if (data.q == TRUE)
 	{
 		ft_printf("%s\n", str);

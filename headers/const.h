@@ -23,6 +23,7 @@
 # define BUFF 101
 # define ADDR_SIZE 8
 # define BASE_SIZE 64
+# define N 2
 
 # define F(x, y, z) ((x & y) | ((~x) & z))
 # define G(x, y, z) ((x & z) | (y & (~z)))

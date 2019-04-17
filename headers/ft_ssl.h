@@ -25,16 +25,20 @@ typedef enum	e_cipher {
 	SHA256
 }				t_cipher;
 
+typedef struct	s_f {
+	char		*name;
+	char		*(*func)(char *);
+}				t_f;
+
 typedef struct	s_data {
 	t_bool		q;
 	t_bool		r;
-	t_cipher	cipher;
+	t_f			f;
 }				t_data;
 
 typedef struct	s_info {
 	uint32_t	size;
 	uchar_t		*base;
-	char		*result;
 }				t_info;
 
 /*
@@ -49,15 +53,9 @@ int				main(int argc, char **argv);
 */
 
 void			parse_flags(int argc, char **argv, t_data data);
-t_cipher		check_cipher(char *cipher);
+t_bool			get_f(char *str, t_f *f);
 void			parse_input(int argc, char **argv);
 char			*create_str(uint32_t *quad, int size);
-
-/*
-**	cipher.c
-*/
-
-char			*hash(char *str, t_cipher cipher);
 
 /*
 **	md5.c
@@ -98,6 +96,7 @@ uint32_t		ch(uint32_t x, uint32_t y, uint32_t z);
 **	input.c
 */
 
+void			cipher_error(char *str);
 char			*cat_str(char *ptr1, char *ptr2, int size, size_t num);
 char			*read_str(int fd);
 void			handle_p(t_data data, t_bool is_flag);
@@ -116,7 +115,6 @@ void			handle_file(int argc, char **argv, int i, t_data data);
 */
 
 void			error(char *msg);
-char			*get_cipher(t_cipher cipher);
 uint32_t		reverse(uint32_t i);
 uint64_t		reverse_64(uint64_t i);
 char			*to_16(uint32_t addr, int i, int j);
@@ -125,7 +123,7 @@ char			*to_16(uint32_t addr, int i, int j);
 **	print.c
 */
 
-char			*get_up_chipher(t_cipher cipher);
+char			*get_up_chipher(char *str);
 void			print_p(char *str, char *init, t_bool is_flag);
 void			print_s(char *str, char *init, t_data data);
 void			print_f(char *str, char *name, t_data data);

@@ -15,7 +15,7 @@
 void	error_file(char *name, t_data data)
 {
 	ft_printf("ft_ssl: %s: %s: No such file or directory\n",
-			get_cipher(data.cipher), name);
+			data.f.name, name);
 }
 
 char	*read_file(char *name)
@@ -42,8 +42,9 @@ void	handle_file(int argc, char **argv, int i, t_data data)
 			error_file(argv[i], data);
 			continue ;
 		}
-		res = hash(str, data.cipher);
+		res = data.f.func(str);
 		print_f(res, argv[i], data);
 		free(str);
+		free(res);
 	}
 }
